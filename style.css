@@ -10,96 +10,111 @@ body {
   width: 100%;
   height: 100vh;
   overflow: hidden;
-  background-color: aquamarine;
+  background-color: #0f172a;
   padding: 5px;
   gap: 5px;
+  color: #f8fafc;
 }
 
 .contentHeader {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   align-items: center;
-
   gap: 0.5rem;
   flex-shrink: 0;
+}
 
-  .totalBolas,
-  .insertBolas,
-  .deletarBolas {
-    border: 1px solid black;
-    width: 100%;
-    height: 100%;
-    border-radius: 0.5rem;
-    padding: 0.5rem;
-    background-color: rgba(87, 163, 153, 0.252);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-  }
+.totalBolas,
+.insertBolas,
+.deletarBolas {
+  border: 1px solid #334155;
+  width: 100%;
+  height: 100%;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  background-color: #1e293b;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-align: center;
+}
 
-  .btn {
-    padding: 5px 12px;
-    letter-spacing: 1px;
-    border-radius: 0.5rem;
-    cursor: pointer;
-  }
+.btn {
+  padding: 5px 12px;
+  letter-spacing: 1px;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  border: none;
+  font-weight: 600;
+  color: white;
+}
 
-  .inputs {
-    font-size: large;
-    font-weight: bold;
-    letter-spacing: 1px;
-    background-color: white;
-    border: 1px solid black;
-    border-radius: 0.5rem;
-    width: 80%;
-    padding: 5px;
-  }
+#btn-insert {
+  background-color: #10b981;
+}
 
-  .totalBolas {
-    .labelTotal {
-      font-size: 1rem;
-    }
+#btn-deletar {
+  background-color: #f59e0b;
+}
 
-    .total {
-      font-size: large;
-      font-weight: bold;
-      letter-spacing: 1px;
-      background-color: white;
-      border: 1px solid black;
-      border-radius: 0.5rem;
-      width: 80%;
-      padding: 5px;
-    }
-  }
+#btn-limpar {
+  background-color: #ef4444;
+}
 
-  .insertBolas {
-    #btn-insert:hover {
-      box-shadow: inset 0px 0px 15px rgb(0, 255, 17);
-    }
-  }
+.inputs {
+  font-size: large;
+  font-weight: bold;
+  letter-spacing: 1px;
+  background-color: #0f172a;
+  color: #38bdf8;
+  border: 1px solid #334155;
+  border-radius: 0.5rem;
+  width: 80%;
+  padding: 5px;
+  text-align: center;
+}
 
-  .deletarBolas {
-    .btns {
-      display: flex;
-      gap: 1rem;
-    }
-    #btn-deletar:hover {
-      box-shadow: inset 0px 0px 15px rgb(255, 157, 157);
-    }
+.labelTotal {
+  font-size: 1rem;
+  color: #94a3b8;
+}
 
-    #btn-limpar:hover {
-      box-shadow: inset 0px 0px 15px rgb(255, 0, 0);
-    }
-  }
+.total {
+  font-size: large;
+  font-weight: bold;
+  letter-spacing: 1px;
+  background-color: #0f172a;
+  color: #38bdf8;
+  border: 1px solid #334155;
+  border-radius: 0.5rem;
+  width: 80%;
+  padding: 5px;
+}
+
+#btn-insert:hover {
+  box-shadow: 0px 0px 10px #10b981;
+}
+
+.btns {
+  display: flex;
+  gap: 1rem;
+}
+
+#btn-deletar:hover {
+  box-shadow: 0px 0px 10px #f59e0b;
+}
+
+#btn-limpar:hover {
+  box-shadow: 0px 0px 10px #ef4444;
 }
 
 #pistaDeBolinhas {
   flex: 1;
   min-height: 0;
-  background-color: white;
-  border: 1px solid black;
+  background-color: #020617;
+  border: 1px solid #334155;
   border-radius: 0.5rem;
   position: relative;
 }
