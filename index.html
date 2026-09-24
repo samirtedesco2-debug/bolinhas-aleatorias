@@ -9,13 +9,14 @@
   <body>
     <header class="contentHeader">
       <div class="totalBolas">
-        <label class="labelTotal" for="total">Total de Bola na pista.</label>
+        <label class="labelTotal" for="total">Total de Bola na pista:</label>
         <p class="total" id="totalBolls">0</p>
       </div>
 
       <div class="insertBolas">
-        <label for="inserirBolas">Inserir Bolas</label>
+        <label for="inserirBolas">Inserir Bolas:</label>
         <input
+          class="inputs"
           type="number"
           step="1"
           min="0"
@@ -23,16 +24,27 @@
           id="inserirBolas"
         />
         <div class="btns">
-          <button class="btn-insert">Inserir</button>
-          <button class="btn-deletar">Deletar</button>
+          <button class="btn" id="btn-insert">Inserir</button>
         </div>
       </div>
 
-      <div class="zerar">
-        <button class="btn-zerar">Limpar Pista</button>
+      <div class="deletarBolas">
+        <label for="deletBolas">Deletar Bolas:</label>
+        <input
+          class="inputs"
+          type="number"
+          step="1"
+          min="0"
+          name="deletBolas"
+          id="deletBolas"
+        />
+        <div class="btns">
+          <button class="btn" id="btn-deletar">Deletar</button>
+          <button class="btn" id="btn-limpar">Limpar</button>
+        </div>
       </div>
     </header>
-    <main class="pistaDeBolinhas"></main>
+    <main id="pistaDeBolinhas"></main>
 
     <script src="script.js"></script>
   </body>
