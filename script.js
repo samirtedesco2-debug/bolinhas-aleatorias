@@ -12,7 +12,7 @@ let numBolas = 0;
 
 class Bola {
   constructor(arrayBolas, pistaDeBolinhas) {
-    this.tam = Math.floor(Math.random() * 15) + 10;
+    this.tam = Math.floor(Math.random() * 55) + 10;
     this.corR = Math.floor(Math.random() * 255);
     this.corG = Math.floor(Math.random() * 255);
     this.corB = Math.floor(Math.random() * 255);
@@ -95,17 +95,17 @@ btnInsert.addEventListener("click", () => {
   for (let i = 0; i < addBolls; i++) {
     bolas.push(new Bola(bolas, pistaDeBolinhas));
   }
-  console.log("add");
 });
 
 btnDeletar.addEventListener("click", () => {
   const decBolls = Number(deletBolas.value);
   for (let i = 0; i < decBolls; i++) {
-    remover();
+    if (bolas.length > 0) {
+      bolas[0].remover();
+    }
   }
-  console.log("del");
 });
 
 btnLimpar.addEventListener("click", () => {
-  console.log("limpar");
+  [...bolas].forEach((b) => b.remover());
 });
