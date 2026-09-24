@@ -1,40 +1,3 @@
-// const totalBolls = document.querySelector("#totalBolls");
-// const inserirBolas = document.querySelector("#inserirBolas");
-// const btnInsert = document.querySelector("#btn-insert");
-// const deletBolas = document.querySelector("#deletBolas");
-// const btnLimpar = document.querySelector("#btn-limpar");
-// const btnDeletar = document.querySelector("#btn-deletar");
-// const pistaDeBolinhas = document.querySelector("#pistaDeBolinhas");
-// let larguraPista = pistaDeBolinhas.offsetWidth;
-// let alturaPista = pistaDeBolinhas.offsetHeight;
-// let bolas = [];
-// let numBolas = 0;
-
-// window.addEventListener("resize", (eve) => {
-//   larguraPista = pistaDeBolinhas.offsetWidth;
-//   alturaPista = pistaDeBolinhas.offsetHeight;
-// });
-
-// btnInsert.addEventListener("click", () => {
-//   const addBolls = Number(totalBolls.value);
-//   for (let i = 0; i < addBolls; i++) {
-//     //adiciona bolinhas
-//   }
-//   console.log("add");
-// });
-
-// btnDeletar.addEventListener("click", () => {
-//   const decBolls = Number(totalBolls.value);
-//   for (let i = 0; i < decBolls; i++) {
-//     //diminui bolinhas
-//   }
-//   console.log("del");
-// });
-
-// btnLimpar.addEventListener("click", () => {
-//   console.log("limpar");
-// });
-
 const totalBolls = document.querySelector("#totalBolls");
 const inserirBolas = document.querySelector("#inserirBolas");
 const btnInsert = document.querySelector("#btn-insert");
@@ -42,119 +5,107 @@ const deletBolas = document.querySelector("#deletBolas");
 const btnLimpar = document.querySelector("#btn-limpar");
 const btnDeletar = document.querySelector("#btn-deletar");
 const pistaDeBolinhas = document.querySelector("#pistaDeBolinhas");
-
 let larguraPista = pistaDeBolinhas.offsetWidth;
 let alturaPista = pistaDeBolinhas.offsetHeight;
 let bolas = [];
 let numBolas = 0;
 
-totalBolls.textContent = numBolas;
+class Bola {
+  constructor(arrayBolas, pistaDeBolinhas) {
+    this.tam = Math.floor(Math.random() * 15) + 10;
+    this.corR = Math.floor(Math.random() * 255);
+    this.corG = Math.floor(Math.random() * 255);
+    this.corB = Math.floor(Math.random() * 255);
+    this.pX = Math.floor(Math.random() * (larguraPista - this.tam));
+    this.pY = Math.floor(Math.random() * (alturaPista - this.tam));
+    this.vX = Math.floor(Math.random() * 5) + 0.5;
+    this.vY = Math.floor(Math.random() * 5) + 0.5;
+    this.dirX = Math.floor(Math.random() * 10) > 5 ? 1 : -1;
+    this.dirY = Math.floor(Math.random() * 10) < 5 ? 1 : -1;
+    this.arrayBolas = arrayBolas;
+    this.pistaDeBolinhas = pistaDeBolinhas;
+    this.id = Date.now() + "_" + Math.floor(Math.random() * 100000000000000000);
+    this.desenhar();
+    this.controle = setInterval(this.controlar, 10);
+    this.eu = document.getElementById(this.id);
+    numBolas++;
+    totalBolls.innerHTML = numBolas;
+  }
+  minhaPosicao = () => {
+    return this.arrayBolas.indexOf(this);
+  };
 
-window.addEventListener("resize", () => {
+  desenhar = () => {
+    const div = document.createElement("div");
+    div.setAttribute("id", this.id);
+    div.setAttribute("class", "bola");
+    div.setAttribute(
+      "style",
+      `left:${this.pX}px;top:${this.pY}px;width:${this.tam}px;height:${this.tam}px;background-color:rgb(${this.corR},${this.corG},${this.corB})`,
+    );
+    this.pistaDeBolinhas.appendChild(div);
+  };
+
+  remover = () => {
+    clearInterval(this.controle);
+    bolas = bolas.filter((b) => {
+      if (b.id != this.id) {
+        return b;
+      }
+    });
+    this.eu.remove();
+    numBolas--;
+    totalBolls.innerHTML = numBolas;
+  };
+
+  colisao_bordas = () => {
+    if (this.pX + this.tam >= larguraPista) {
+      this.dirX = -1;
+    } else if (this.pX <= 0) {
+      this.dirX = 1;
+    }
+    if (this.pY + this.tam >= alturaPista) {
+      this.dirY = -1;
+    } else if (this.pY <= 0) {
+      this.dirY = 1;
+    }
+  };
+
+  controlar = () => {
+    this.colisao_bordas();
+    this.pX += this.dirX * this.vX;
+    this.pY += this.dirY * this.vY;
+    this.eu.setAttribute(
+      "style",
+      `left:${this.pX}px;top:${this.pY}px;width:${this.tam}px;height:${this.tam}px;background-color:rgb(${this.corR},${this.corG},${this.corB})`,
+    );
+    if (this.pX > larguraPista || this.pY > alturaPista) {
+      this.remover();
+    }
+  };
+}
+
+window.addEventListener("resize", (eve) => {
   larguraPista = pistaDeBolinhas.offsetWidth;
   alturaPista = pistaDeBolinhas.offsetHeight;
 });
 
-// Classe que define cada Bolinha
-class Bola {
-  constructor(pistaWidth, pistaHeight) {
-    this.tamanho = 20; // Diâmetro em pixels
-    this.raio = this.tamanho / 2;
-
-    // Posição inicial aleatória dentro da pista
-    this.px = Math.random() * (pistaWidth - this.tamanho);
-    this.py = Math.random() * (pistaHeight - this.tamanho);
-
-    // Velocidade e direção aleatórias (-3 a 3)
-    this.vx = (Math.random() - 0.5) * 6;
-    this.vy = (Math.random() - 0.5) * 6;
-
-    // Cor aleatória em HSL
-    this.cor = `hsl(${Math.random() * 360}, 100%, 50%)`;
-
-    // Criação do elemento DOM (HTML)
-    this.element = document.createElement("div");
-    this.element.style.width = `${this.tamanho}px`;
-    this.element.style.height = `${this.tamanho}px`;
-    this.element.style.backgroundColor = this.cor;
-    this.element.style.borderRadius = "50%";
-    this.element.style.position = "absolute";
-
-    pistaDeBolinhas.appendChild(this.element);
-    this.desenhar();
-  }
-
-  // Atualiza a posição no CSS
-  desenhar() {
-    this.element.style.transform = `translate(${this.px}px, ${this.py}px)`;
-  }
-
-  // Atualiza física e trata colisão com as bordas
-  mover(limiteX, limiteY) {
-    this.px += this.vx;
-    this.py += this.vy;
-
-    // Colisão horizontal (esquerda / direita)
-    if (this.px <= 0 || this.px + this.tamanho >= limiteX) {
-      this.vx *= -1;
-      this.px = Math.max(0, Math.min(this.px, limiteX - this.tamanho));
-    }
-
-    // Colisão vertical (topo / base)
-    if (this.py <= 0 || this.py + this.tamanho >= limiteY) {
-      this.vy *= -1;
-      this.py = Math.max(0, Math.min(this.py, limiteY - this.tamanho));
-    }
-
-    this.desenhar();
-  }
-
-  // Remove a bolinha do DOM
-  remover() {
-    this.element.remove();
-  }
-}
-
-// Loop de animação contínuo
-function animar() {
-  for (let i = 0; i < bolas.length; i++) {
-    bolas[i].mover(larguraPista, alturaPista);
-  }
-  requestAnimationFrame(animar);
-}
-
-// Inicia a animação
-animar();
-
-// Eventos dos Botões
 btnInsert.addEventListener("click", () => {
   const addBolls = Number(inserirBolas.value);
   for (let i = 0; i < addBolls; i++) {
-    bolas.push(new Bola(larguraPista, alturaPista));
-    numBolas++;
+    bolas.push(new Bola(bolas, pistaDeBolinhas));
   }
-  totalBolls.textContent = numBolas;
-  inserirBolas.value = "";
+  console.log("add");
 });
 
 btnDeletar.addEventListener("click", () => {
   const decBolls = Number(deletBolas.value);
   for (let i = 0; i < decBolls; i++) {
-    if (bolas.length > 0) {
-      const bolaRemovida = bolas.pop();
-      bolaRemovida.remover();
-      numBolas--;
-    }
+    remover();
   }
-  totalBolls.textContent = numBolas;
-  deletBolas.value = "";
+  console.log("del");
 });
 
 btnLimpar.addEventListener("click", () => {
-  bolas.forEach((bola) => bola.remover());
-  bolas = [];
-  numBolas = 0;
-  totalBolls.textContent = numBolas;
-  inserirBolas.value = "";
-  deletBolas.value = "";
+  console.log("limpar");
 });

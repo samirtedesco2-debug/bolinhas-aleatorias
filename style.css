@@ -101,4 +101,10 @@ body {
   background-color: white;
   border: 1px solid black;
   border-radius: 0.5rem;
+  position: relative;
+}
+
+.bola {
+  border-radius: 100px;
+  position: absolute;
 }
